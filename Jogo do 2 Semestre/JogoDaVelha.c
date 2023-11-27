@@ -1,3 +1,8 @@
+/* Lucas Timponi Mercadante Castro | Ra: 2304913
+--------------------------------------------------
+Atividade - Extra ( JOGO DA VELHA )
+*/
+
 #include <stdio.h>
 #include <stdbool.h>
 
