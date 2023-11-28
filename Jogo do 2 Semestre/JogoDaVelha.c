@@ -1,7 +1,6 @@
-/* Lucas Timponi Mercadante Castro | Ra: 2304913
---------------------------------------------------
-Atividade - Extra ( JOGO DA VELHA )
-*/
+// Lucas Timponi Mercadante Castro | RA: 2304913
+// ATIVIDADE EXTRA - JOGO DA VELHA 
+
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -34,6 +33,19 @@ bool verificarVencedor(char tabuleiro[3][3], char jogador) {
     return false;
 }
 
+void exibirRegras() {
+    printf("\nRegras do Jogo da Velha:\n");
+    printf("O jogo é jogado em um tabuleiro 3x3.\n");
+    printf("Cada jogador escolhe 'X' ou 'O'.\n");
+    printf("O primeiro jogador a conseguir ter 3 de suas marcas em linha, coluna ou diagonal vence.\n");
+}
+
+void exibirInstrucoes() {
+    printf("\nInstruções para Jogar:\n");
+    printf("Digite a linha e a coluna para fazer sua jogada no formato 'linha coluna'.\n");
+    printf("As linhas e colunas são numeradas de 1 a 3.\n");
+}
+
 int main() {
     char tabuleiro[3][3] = {
         {' ', ' ', ' '},
@@ -50,32 +62,61 @@ int main() {
     printf("Digite o nome do Jogador 2 (O): ");
     scanf("%s", jogador2);
 
+    int opcao;
     while (true) {
-        exibirTabuleiro(tabuleiro);
+        printf("\n******************************\n");
+        printf("********JOGO DA VELHA*********\n");
+        printf("******************************\n");
+        printf("1. Iniciar jogo\n");
+        printf("2. Exibir regras\n");
+        printf("3. Instruções para jogar\n");
+        printf("9. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
 
-        char jogador = (jogadas % 2 == 0) ? 'X' : 'O';
-        char* nomeJogador = (jogador == 'X') ? jogador1 : jogador2;
+        switch (opcao) {
+            case 1:
+                while (true) {
+                    exibirTabuleiro(tabuleiro);
 
-        printf("\n%s, digite a linha e a coluna (Ex: 1 2): ", nomeJogador);
-        scanf("%d %d", &linha, &coluna);
+                    char jogador = (jogadas % 2 == 0) ? 'X' : 'O';
+                    char* nomeJogador = (jogador == 'X') ? jogador1 : jogador2;
 
-        if (linha < 1 || linha > 3 || coluna < 1 || coluna > 3 || tabuleiro[linha - 1][coluna - 1] != ' ') {
-            printf("Jogada inválida! Tente novamente.\n");
-            continue;
-        }
+                    printf("\n%s, digite a linha e a coluna (Ex: 1 2): ", nomeJogador);
+                    scanf("%d %d", &linha, &coluna);
 
-        tabuleiro[linha - 1][coluna - 1] = jogador;
-        jogadas++;
+                    if (linha < 1 || linha > 3 || coluna < 1 || coluna > 3 || tabuleiro[linha - 1][coluna - 1] != ' ') {
+                        printf("Jogada inválida! Tente novamente.\n");
+                        continue;
+                    }
 
-        if (verificarVencedor(tabuleiro, jogador)) {
-            exibirTabuleiro(tabuleiro);
-            printf("\nParabéns! %s venceu!\n", nomeJogador);
-            break;
-        } else if (jogadas == 9) {
-            exibirTabuleiro(tabuleiro);
-            printf("\nEmpate!\n");
-            empate = true;
-            break;
+                    tabuleiro[linha - 1][coluna - 1] = jogador;
+                    jogadas++;
+
+                    if (verificarVencedor(tabuleiro, jogador)) {
+                        exibirTabuleiro(tabuleiro);
+                        printf("\nParabéns! %s venceu!\n", nomeJogador);
+                        break;
+                    } else if (jogadas == 9) {
+                        exibirTabuleiro(tabuleiro);
+                        printf("\nEmpate!\n");
+                        empate = true;
+                        break;
+                    }
+                }
+                break;
+            case 2:
+                exibirRegras();
+                break;
+            case 3:
+                exibirInstrucoes();
+                break;
+            case 9:
+                printf("Saindo do jogo...\n");
+                return 0;
+            default:
+                printf("Opção inválida! Escolha novamente.\n");
+                break;
         }
     }
 
